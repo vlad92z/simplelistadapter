@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.vladz.simplelistadapter.databinding.FragmentFirstBinding
 
 /**
@@ -19,6 +21,8 @@ class FirstFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    private val names = listOf("Peter", "James", "Franklin")
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,6 +35,16 @@ class FirstFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val recyclerView = binding.recyclerView
+        val nameAdapter = SimpleListAdapter()
+        recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        recyclerView.adapter = nameAdapter
+
+        // Set the list of names to the adapter
+        // Normally, you would want to observe a live data object
+        // to keep the adapter up to date
+        nameAdapter.submitList(names)
     }
 
     override fun onDestroyView() {
